@@ -1,29 +1,64 @@
 package src;
-import java.util.Arrays;
 
 public class Main {
-
     public static void main(String[] args) {
-        PrintThreeWords.printThreeWords();
-        CheckSumSign.checkSumSign();
-        PrintColor.printColor();
-        CompareNumbers.compareNumbers();
-        boolean result = CheckSumRange.checkSumRange(5, 15);
-        System.out.println("Сумма в пределах от 10 до 20: " + result);
-        CheckNumberSign.checkNumberSign(5);
-        System.out.println(IsNegative.isNegative(-5));
-        PrintString.printString("Hi There!", 3);
-        System.out.println("Is 2024 a leap year?"+ IsLeapYear.isLeapYear(2024));
-        ProcessArray1.processArray1();
+        String[][] validArray = {
+                {"1", "2", "3", "4"},
+                {"5", "6", "7", "8"},
+                {"9", "10", "11", "12"},
+                {"13", "14", "15", "16"}
+        };
 
-        int[] filledArray = ProcessArray2.processArray2();
-        System.out.println(Arrays.toString(filledArray));
-        ProcessArray3.processArray3();
+        String[][] invalidArraySize = {
+                {"1", "2", "3"},
+                {"4", "5", "6"},
+                {"7", "8", "9"}
+        };
 
-        int n = 5;
-        int[][] array = Process2DArray.create2DArray(n);
-        Process2DArray.fillDiagonal(array);
-        System.out.println(Arrays.deepToString(array));
-        ProcessInitializedArray.processInitializedArray();
+        String[][] invalidArrayData = {
+                {"1", "2", "3", "4"},
+                {"5", "6", "five", "8"},
+                {"9", "10", "11", "12"},
+                {"13", "14", "15", "16"}
+        };
+
+        try {
+            int result = arraySum(validArray);
+            System.out.println("Сумма элементов массива: " + result);
+        } catch (MyArraySizeException | MyArrayDataException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        try {
+            arraySum(invalidArraySize);
+        } catch (MyArraySizeException | MyArrayDataException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        try {
+            arraySum(invalidArrayData);
+        } catch (MyArraySizeException | MyArrayDataException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+    }
+    public static int arraySum(String[][] array) throws MyArraySizeException, MyArrayDataException {
+        if (array.length != 4 || array[0].length != 4) {
+            throw new MyArraySizeException("Размер массива должен быть 4x4");
+        }
+
+        int sum = 0;
+
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                try {
+                    sum += Integer.parseInt(array[i][j]);
+                } catch (NumberFormatException e) {
+                    throw new MyArrayDataException("Ошибка в данных массива на позиции [" + i + "][" + j + "]: " + array[i][j]);
+                }
+            }
+        }
+
+        return sum;
     }
 }
+
