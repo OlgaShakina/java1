@@ -40,7 +40,7 @@ public class MtsBlockTitleTest {
     @Test
     public void checkPhoneAndButton() {
         WebElement phoneInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='connection-phone']")));
-        phoneInput.sendKeys("298765437");
+        phoneInput.sendKeys("297777777");
 
         WebElement continueButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(), 'Продолжить')]")));
         assertTrue(continueButton.isEnabled(), "Кнопка 'Продолжить' не активна");
